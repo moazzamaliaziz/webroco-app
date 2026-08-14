@@ -333,7 +333,7 @@ function Hero() {
         <div className="absolute inset-0 overflow-hidden">
           <img
             src={heroImg}
-            alt="Webroco — Web Development Studio"
+            alt="Webroco ï¿½ Web Development Studio"
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay */}
@@ -341,7 +341,7 @@ function Hero() {
           <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/30" />
         </div>
 
-        {/* Floating project card — unique touch */}
+        {/* Floating project card ï¿½ unique touch */}
         <motion.div
           initial={{ opacity: 0, y: 30, rotate: -3 }}
           animate={{ opacity: 1, y: 0, rotate: -3 }}
@@ -350,7 +350,7 @@ function Hero() {
         >
           <div className="text-[10px] text-accent tracking-[1px] uppercase mb-1.5">Latest Project</div>
           <div className="text-sm font-bold leading-tight">E-Commerce Platform</div>
-          <div className="text-[10px] text-foreground/40 mt-1.5">2025 · Development</div>
+          <div className="text-[10px] text-foreground/40 mt-1.5">2025 ï¿½ Development</div>
         </motion.div>
       </motion.div>
 
@@ -374,7 +374,7 @@ function Hero() {
             <span className="text-[11px] tracking-[0.2em] text-foreground/30 uppercase transition-colors duration-300 group-hover:text-foreground/0">
               {item.label}
             </span>
-            {/* Hover label with accent color — slides in */}
+            {/* Hover label with accent color ï¿½ slides in */}
             <span className="absolute inset-0 flex items-center justify-end text-[11px] tracking-[0.2em] text-accent uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
               {item.label}
             </span>
