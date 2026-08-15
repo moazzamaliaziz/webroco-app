@@ -10,9 +10,9 @@ import heroImg from "../assets/hero-webroco.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Webroco — We Build the Web. You Own the Results." },
+      { title: "Webroco � We Build the Web. You Own the Results." },
       { name: "description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
-      { property: "og:title", content: "Webroco — Senior-Level Web Studio" },
+      { property: "og:title", content: "Webroco � Senior-Level Web Studio" },
       { property: "og:description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
     ],
   }),
@@ -191,10 +191,10 @@ function Hero() {
 
   return (
     <section id="hero" className="relative h-[300vh]">
-      {/* Sticky container — pinned for 3x viewport scroll */}
+      {/* Sticky container � pinned for 3x viewport scroll */}
       <div className="hero-sticky sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
 
-        {/* ─── CENTER IMAGE (like heynesh person photo) ─── */}
+        {/* --- CENTER IMAGE (like heynesh person photo) --- */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -206,19 +206,19 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* ─── WEBROCO Logo + Socials (like NESH® top bar) ─── */}
+        {/* --- WEBROCO Logo + Socials (like NESH� top bar) --- */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-5 md:px-10 py-5 md:py-7"
         >
-          <a href="/" className="cursor-target font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.03em] text-xl md:text-2xl">
+          <a href="/" className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.03em] text-xl md:text-2xl">
             webroco<span className="text-accent">.</span>
           </a>
           <div className="flex items-center gap-4 md:gap-6">
             {["LinkedIn", "Instagram", "GitHub"].map((s) => (
-              <a key={s} href="#" target="_blank" rel="noopener noreferrer" className="cursor-target text-[10px] tracking-[0.2em] text-foreground/35 uppercase hover:text-accent transition-colors duration-300 relative group">
+              <a key={s} href="#" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase hover:text-accent transition-colors duration-300 relative group">
                 {s}
                 <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
               </a>
@@ -226,7 +226,7 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* ─── Left Sidebar Nav (heynesh-style) ─── */}
+        {/* --- Left Sidebar Nav (heynesh-style) --- */}
         <motion.nav
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -241,7 +241,7 @@ function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.5 + i * 0.07, duration: 0.5 }}
-              className="cursor-target group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
+              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
             >
               <span className="absolute inset-0 bg-foreground/[0.06] rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
               <svg className="w-3.5 h-3.5 text-foreground/35 group-hover:text-accent transition-colors duration-300 relative z-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
@@ -255,7 +255,7 @@ function Hero() {
           ))}
         </motion.nav>
 
-        {/* ─── Bottom Content (anchored to bottom, overlapping image — like heynesh) ─── */}
+        {/* --- Bottom Content (anchored to bottom, overlapping image � like heynesh) --- */}
         <div className="relative z-20 w-full px-5 md:px-10 pb-8 md:pb-12">
           <div className="max-w-[1400px] mx-auto flex items-end justify-between gap-6">
             
@@ -290,12 +290,12 @@ function Hero() {
                 transition={{ delay: 0.9, duration: 0.8 }}
                 className="mt-7 flex flex-wrap items-center justify-center gap-3"
               >
-                <a href="mailto:hello@webroco.xyz" className="cursor-target group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]">
+                <a href="mailto:hello@webroco.xyz" className="group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]">
                   <span className="relative z-10">Let&apos;s Talk</span>
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-0.5 transition-transform"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
                 </a>
-                <a href="/about" className="cursor-target inline-flex items-center h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/55 hover:text-foreground hover:border-foreground/40 transition-all duration-300">
+                <a href="/about" className="inline-flex items-center h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/55 hover:text-foreground hover:border-foreground/40 transition-all duration-300">
                   About Us
                 </a>
               </motion.div>
@@ -311,14 +311,14 @@ function Hero() {
               <p className="text-[12px] leading-[1.7] text-foreground/45">
                 Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results.
               </p>
-              <button onClick={copyEmail} className="cursor-target mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer">
+              <button onClick={copyEmail} className="mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer">
                 {emailCopied ? "Copied!" : "hello@webroco.xyz"}
               </button>
             </motion.div>
           </div>
         </div>
 
-        {/* ─── Fixed Stats Cards (position:fixed — stays while content scrolls) ─── */}
+        {/* --- Fixed Stats Cards (position:fixed � stays while content scrolls) --- */}
         <div className="fixed top-1/2 right-[8%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-3">
           {/* Stats */}
           <motion.div
@@ -353,7 +353,7 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* ─── Custom Scroll Indicator (animated) ─── */}
+        {/* --- Custom Scroll Indicator (animated) --- */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -628,7 +628,7 @@ function WorkCard({ w, index }: { w: typeof WORK[number]; index: number }) {
       <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight">
         {w.title}
       </h3>
-      <div className="mt-1 text-sm text-foreground/55">{w.year} – {w.cat}</div>
+      <div className="mt-1 text-sm text-foreground/55">{w.year} � {w.cat}</div>
     </motion.a>
   );
 }
@@ -733,11 +733,11 @@ function CtaGuide() {
 /* ---------------------------- TESTIMONIALS ------------------------------ */
 
 const TESTIMONIALS = [
-  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch — the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
+  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch � the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
   { quote: "A rare team that pairs taste with execution. Every shipped pixel felt considered and perfectly aligned with our brand.", name: "Amelia Chen", role: "Head of Design, Lumen" },
-  { quote: "Senior-level partners — not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
+  { quote: "Senior-level partners � not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
   { quote: "The attention to detail and strategic thinking elevated our entire digital experience. Highly recommend.", name: "Sarah Kim", role: "CTO, Elevate" },
-  { quote: "They don't just build websites — they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
+  { quote: "They don't just build websites � they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
 ];
 
 const CARD_ROTATIONS = [-6, 4, -3, 5, -4];
@@ -933,7 +933,7 @@ function BigMarquee() {
             key={i}
             className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-[14vw] leading-none text-foreground/15"
           >
-            Let&apos;s Work Together —
+            Let&apos;s Work Together �
           </span>
         ))}
       </motion.div>

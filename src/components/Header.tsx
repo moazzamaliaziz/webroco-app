@@ -47,7 +47,7 @@ export default function Header() {
               <Link
                 key={l.label}
                 to={l.to}
-                className={`cursor-target transition-colors relative group ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                className={`transition-colors relative group ${isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               >
                 {l.label}
                 <span className={`absolute -bottom-1 left-0 h-px bg-foreground transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`} />
@@ -59,14 +59,14 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <a
             href="mailto:hello@webroco.xyz"
-            className="cursor-target hidden sm:inline-flex items-center h-10 px-5 rounded-full bg-foreground text-background text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-all hover:scale-[1.02]"
+            className="hidden sm:inline-flex items-center h-10 px-5 rounded-full bg-foreground text-background text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-all hover:scale-[1.02]"
           >
             Let's Talk
           </a>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Menu"
-            className="cursor-target size-10 rounded-full border border-border grid place-items-center hover:bg-muted transition-colors"
+            className="size-10 rounded-full border border-border grid place-items-center hover:bg-muted transition-colors"
           >
             <div className="flex flex-col gap-[5px]">
               <span

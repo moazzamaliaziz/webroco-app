@@ -81,10 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Webroco â€” We Build the Web. You Own the Results." },
-      { name: "description", content: "Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results. Senior-level execution â€” no juniors, no outsourcing." },
+      { title: "Webroco — We Build the Web. You Own the Results." },
+      { name: "description", content: "Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results. Senior-level execution — no juniors, no outsourcing." },
       { name: "author", content: "Webroco" },
-      { property: "og:title", content: "Webroco â€” Senior-Level Web Studio" },
+      { property: "og:title", content: "Webroco — Senior-Level Web Studio" },
       { property: "og:description", content: "Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -128,7 +128,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TargetCursor spinDuration={2} hideDefaultCursor={true} parallaxOn={true} cursorColor="#e8452a" />
+      <TargetCursor spinDuration={2} hideDefaultCursor={true} parallaxOn={true} hoverDuration={0.2} cursorColor="#e8452a" cursorColorOnTarget="#ffffff" />
       <SmoothScroll>
         <Outlet />
       </SmoothScroll>
