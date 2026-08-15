@@ -7,60 +7,14 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { SmoothScroll } from "../components/smooth-scroll";
+import TargetCursor from "../components/TargetCursor/TargetCursor";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
-function Cursor() {
-  useEffect(() => {
-    const cursor = document.getElementById("rd-cursor");
-    const follower = document.getElementById("rd-cursor-follower");
-    if (!cursor || !follower) return;
 
-    const pos = { x: 0, y: 0 };
-    const followerPos = { x: 0, y: 0 };
-    let raf: number;
-
-    const onMove = (e: MouseEvent) => {
-      pos.x = e.clientX;
-      pos.y = e.clientY;
-    };
-
-    const animate = () => {
-      cursor.style.left = pos.x + "px";
-      cursor.style.top = pos.y + "px";
-      followerPos.x += (pos.x - followerPos.x) * 0.1;
-      followerPos.y += (pos.y - followerPos.y) * 0.1;
-      follower.style.left = followerPos.x + "px";
-      follower.style.top = followerPos.y + "px";
-      raf = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener("mousemove", onMove);
-    animate();
-
-    const expand = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("button, a, .group")) {
-        cursor.style.width = "20px";
-        cursor.style.height = "20px";
-      } else {
-        cursor.style.width = "10px";
-        cursor.style.height = "10px";
-      }
-    };
-    document.addEventListener("mouseover", expand);
-
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseover", expand);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  return null;
-}
 
 function NotFoundComponent() {
   return (
@@ -174,9 +128,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div id="rd-cursor" />
-      <div id="rd-cursor-follower" />
-      <Cursor />
+      <TargetCursor spinDuration={2} hideDefaultCursor={true} parallaxOn={true} cursorColor="#e8452a" />
       <SmoothScroll>
         <Outlet />
       </SmoothScroll>
