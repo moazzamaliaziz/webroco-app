@@ -51,10 +51,8 @@ const TargetCursor = ({
 
   const isMobile = useMemo(() => {
     if (typeof window === "undefined") return false;
-    const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    const small = window.innerWidth <= 768;
     const ua = (navigator.userAgent || "").toLowerCase();
-    return (touch && small) || /android|webos|iphone|ipad|ipod/i.test(ua);
+    return /android|webos|iphone|ipad|ipod|mobile/i.test(ua);
   }, []);
 
   const PAD = 3;
@@ -68,7 +66,7 @@ const TargetCursor = ({
   useEffect(() => {
     if (isMobile || !cursorRef.current) return;
     const origCursor = document.body.style.cursor;
-    if (hideDefaultCursor) document.body.style.cursor = "none";
+    document.body.style.cursor = "none";
 
     const cursor = cursorRef.current;
     const qsa = cursor.querySelectorAll<HTMLDivElement>(".target-cursor-corner");
