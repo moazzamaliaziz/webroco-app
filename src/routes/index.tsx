@@ -29,7 +29,6 @@ function Index() {
       <Preloader onComplete={handleComplete} />
       {loaded && (
         <>
-          <Header />
           <Hero />
           <ImageDistortion />
           <PartnerMarquee />
@@ -171,7 +170,7 @@ function RevealChars({ text, baseDelay = 0 }: { text: string; baseDelay?: number
   );
 }
 
-/* -------------------------------- HERO (heynesh.com exact layout) -------------------------------- */
+/* -------------------------------- HERO (refined — WEBROCO branding, no header, fixed cards) -------------------------------- */
 
 const HERO_NAV = [
   { label: "Home", to: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -181,8 +180,6 @@ const HERO_NAV = [
   { label: "Blog", to: "/blog", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
   { label: "Contact", to: "/contact", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
 ];
-
-const HERO_TRAITS = ["Creative", "Reliable", "Strategist", "Builder", "Efficient"];
 
 function Hero() {
   const [emailCopied, setEmailCopied] = useState(false);
@@ -194,29 +191,49 @@ function Hero() {
 
   return (
     <section id="hero" className="relative h-[300vh]">
-      {/* Sticky container — stays fixed for 3x viewport scroll */}
-      <div className="hero-sticky sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
+      {/* Sticky container */}
+      <div className="hero-sticky sticky top-0 h-screen flex flex-col overflow-hidden">
 
-        {/* Hero image background */}
-        <div className="absolute inset-0 z-0">
-          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/40" />
+        {/* Hero image — RIGHT SIDE, no dark overlay, visible */}
+        <div className="absolute right-0 top-0 bottom-0 w-[45%] z-0 hidden lg:block overflow-hidden">
+          <img src={heroImg} alt="Webroco" className="w-full h-full object-cover" />
+          {/* Subtle left edge fade only */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent" />
+        </div>
+        {/* Mobile image — background */}
+        <div className="absolute inset-0 z-0 lg:hidden overflow-hidden">
+          <img src={heroImg} alt="" className="w-full h-full object-cover opacity-15" />
+          <div className="absolute inset-0 bg-background/80" />
         </div>
 
         {/* Accent glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[150px] pointer-events-none z-0" />
+        <div className="absolute top-1/3 right-[22%] w-[400px] h-[400px] rounded-full bg-accent/6 blur-[120px] pointer-events-none z-0 hidden lg:block" />
+
+        {/* ─── WEBROCO Logo (like NESH® in heynesh.com) ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-20 flex items-center justify-between px-5 md:px-10 pt-6 md:pt-8"
+        >
+          <a href="/" className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-2xl md:text-3xl">
+            webroco<span className="text-accent">.</span>
+          </a>
+          <div className="flex items-center gap-5">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/40 uppercase hover:text-accent transition-colors">LinkedIn</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/40 uppercase hover:text-accent transition-colors">Instagram</a>
+            <a href="https://github.com/moazzamaliaziz" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/40 uppercase hover:text-accent transition-colors">GitHub</a>
+          </div>
+        </motion.div>
 
         {/* ─── Left Sidebar Nav ─── */}
         <motion.nav
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-1"
+          className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-0.5"
         >
-          {/* Background card behind nav items */}
-          <div className="absolute inset-0 -inset-x-3 -inset-y-2 bg-foreground/[0.04] backdrop-blur-sm rounded-2xl border border-foreground/[0.06]" />
-          
+          <div className="absolute inset-0 -inset-x-3 -inset-y-2 bg-foreground/[0.03] backdrop-blur-sm rounded-2xl border border-foreground/[0.06]" />
           {HERO_NAV.map((item, i) => (
             <motion.a
               key={item.label}
@@ -224,158 +241,95 @@ function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.5 + i * 0.07, duration: 0.5 }}
-              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden cursor-pointer z-10"
+              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
             >
-              {/* Hover background */}
               <span className="absolute inset-0 bg-foreground/[0.06] rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-              
-              {/* Icon */}
-              <svg className="w-4 h-4 text-foreground/40 group-hover:text-accent transition-colors duration-300 relative z-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+              <svg className="w-3.5 h-3.5 text-foreground/35 group-hover:text-accent transition-colors duration-300 relative z-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
-              
-              {/* Text with slide-up hover effect */}
-              <span className="relative overflow-hidden h-[18px] w-[80px] z-10">
-                <span className="block text-[11px] tracking-[0.15em] text-foreground/50 uppercase transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
-                  {item.label}
-                </span>
-                <span className="block absolute top-full left-0 text-[11px] tracking-[0.15em] text-accent uppercase transition-all duration-300 group-hover:top-0">
-                  {item.label}
-                </span>
+              <span className="relative overflow-hidden h-[16px] w-[72px] z-10">
+                <span className="block text-[10px] tracking-[0.15em] text-foreground/45 uppercase transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">{item.label}</span>
+                <span className="block absolute top-full left-0 text-[10px] tracking-[0.15em] text-accent uppercase transition-all duration-300 group-hover:top-0">{item.label}</span>
               </span>
             </motion.a>
           ))}
         </motion.nav>
 
-        {/* ─── Main Content (bottom-anchored, like heynesh) ─── */}
-        <div className="relative z-10 w-full px-5 md:px-10 lg:pl-[180px] pb-8 md:pb-12">
-          <div className="max-w-[1500px] mx-auto flex items-end justify-between gap-6">
+        {/* ─── Main Content — bottom anchored ─── */}
+        <div className="relative z-10 flex-1 flex flex-col justify-end px-5 md:px-10 lg:pl-[180px] pb-10 md:pb-14">
+          <div className="max-w-[1400px] mx-auto w-full flex items-end justify-between gap-8">
             
-            {/* Left text — like heynesh's "The Webflow Expert. That's Nenad." */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="hidden md:block max-w-[200px] shrink-0"
-            >
-              <p className="text-[11px] tracking-[0.2em] text-foreground/40 uppercase leading-[1.8]">
-                Senior-Level<br />Web Studio.<br />
-                <span className="text-foreground/70">That&apos;s Webroco.</span>
+            {/* Left text */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} className="hidden md:block max-w-[180px] shrink-0">
+              <p className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase leading-[1.9]">
+                Senior-Level<br />Web Studio.<br /><span className="text-foreground/65">That&apos;s Webroco.</span>
               </p>
             </motion.div>
 
-            {/* Center — Headline + CTAs (like heynesh's "Webflow, Applied Differently.") */}
-            <div className="flex-1 flex flex-col items-center text-center max-w-3xl mx-auto">
+            {/* Center — Headline */}
+            <div className="flex-1 flex flex-col items-center text-center max-w-2xl mx-auto lg:mx-0 lg:items-start lg:text-left">
               <motion.h1
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.88] text-[11vw] md:text-[6vw] lg:text-[4.2vw]"
+                className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.88] text-[10vw] md:text-[5.5vw] lg:text-[3.8vw]"
               >
                 We Build the Web,<br />
-                <span className="text-foreground/35">You Own the Results.</span>
+                <span className="text-foreground/30">You Own the Results.</span>
               </motion.h1>
 
-              {/* CTAs — like heynesh's "Book a Call" + "About Me" */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="mt-8 flex flex-wrap items-center justify-center gap-3"
-              >
-                <a
-                  href="mailto:hello@webroco.xyz"
-                  className="group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]"
-                >
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.8 }} className="mt-7 flex flex-wrap items-center gap-3">
+                <a href="mailto:hello@webroco.xyz" className="group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]">
                   <span className="relative z-10">Let&apos;s Talk</span>
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-0.5 transition-transform">
-                    <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-0.5 transition-transform"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
                 </a>
-                <a
-                  href="/about"
-                  className="inline-flex items-center gap-2 h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/60 hover:text-foreground hover:border-foreground/40 transition-all duration-300"
-                >
-                  About Us
-                </a>
+                <a href="/about" className="inline-flex items-center h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/55 hover:text-foreground hover:border-foreground/40 transition-all duration-300">About Us</a>
               </motion.div>
             </div>
 
-            {/* Right text — like heynesh's "Working closely with your team..." */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="hidden lg:block max-w-[280px] shrink-0 text-right"
-            >
-              <p className="text-[13px] leading-[1.7] text-foreground/55">
-                Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results.
-              </p>
-              <button
-                onClick={copyEmail}
-                className="mt-3 text-[11px] tracking-[0.15em] text-foreground/40 uppercase hover:text-accent transition-colors cursor-pointer"
-              >
-                {emailCopied ? "Copied!" : "hello@webroco.xyz"}
-              </button>
+            {/* Right text */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.8 }} className="hidden lg:block max-w-[240px] shrink-0 text-right">
+              <p className="text-[12px] leading-[1.7] text-foreground/50">Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results.</p>
+              <button onClick={copyEmail} className="mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer">{emailCopied ? "Copied!" : "hello@webroco.xyz"}</button>
             </motion.div>
           </div>
         </div>
 
-        {/* ─── Fixed Stats Cards (position:fixed, like heynesh's hero-cards-wrap) ─── */}
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-[30%] z-20 pointer-events-none hidden lg:flex items-end gap-5">
-          
-          {/* Stats card — "11+ Projects" + "1+ Year" */}
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.0, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-foreground/[0.06] backdrop-blur-md border border-foreground/[0.08] rounded-2xl p-6 md:p-8 min-w-[200px]"
-          >
-            <div className="flex items-end gap-8">
+        {/* ─── Stats Cards — INSIDE sticky, NOT fixed (prevents overlap with next sections) ─── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-1/2 left-[55%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-4"
+        >
+          {/* Stats card */}
+          <div className="bg-foreground/[0.05] backdrop-blur-md border border-foreground/[0.08] rounded-xl p-5 min-w-[170px]">
+            <div className="flex items-end gap-6">
               <div>
-                <div className="text-4xl md:text-5xl font-extrabold tracking-tight">11+</div>
-                <div className="text-[10px] tracking-[0.2em] text-foreground/40 uppercase mt-1">Projects</div>
+                <div className="text-3xl font-extrabold tracking-tight">11+</div>
+                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Projects</div>
               </div>
               <div>
-                <div className="text-2xl md:text-3xl font-extrabold tracking-tight">1+</div>
-                <div className="text-[10px] tracking-[0.2em] text-foreground/40 uppercase mt-1">Year</div>
+                <div className="text-xl font-extrabold tracking-tight">1+</div>
+                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Year</div>
               </div>
             </div>
-          </motion.div>
-
-          {/* Traits card — like heynesh's hero-card-3 */}
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.2, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-foreground/[0.06] backdrop-blur-md border border-foreground/[0.08] rounded-2xl p-4 min-w-[140px]"
-          >
-            <div className="flex flex-col gap-2">
-              {HERO_TRAITS.map((t, i) => (
-                <motion.span
-                  key={t}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.3 + i * 0.08, duration: 0.5 }}
-                  className="text-[11px] tracking-[0.15em] text-foreground/50 uppercase"
-                >
-                  {t}
-                </motion.span>
+          </div>
+          {/* Traits card */}
+          <div className="bg-foreground/[0.05] backdrop-blur-md border border-foreground/[0.08] rounded-xl p-4 min-w-[120px]">
+            <div className="flex flex-col gap-1.5">
+              {["Creative", "Reliable", "Strategist", "Builder", "Efficient"].map((t, i) => (
+                <motion.span key={t} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.2 + i * 0.06, duration: 0.4 }} className="text-[10px] tracking-[0.15em] text-foreground/40 uppercase">{t}</motion.span>
               ))}
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-foreground/20 z-20"
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 1 }} className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-foreground/20 z-20">
           <span className="text-[9px] tracking-[0.3em] uppercase">Scroll</span>
-          <span className="w-px h-8 bg-foreground/15" />
+          <span className="w-px h-6 bg-foreground/15" />
         </motion.div>
 
       </div>
