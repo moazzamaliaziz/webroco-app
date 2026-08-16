@@ -10,9 +10,9 @@ import heroImg from "../assets/hero-webroco.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Webroco — We Build the Web. You Own the Results." },
+      { title: "Webroco ï¿½ We Build the Web. You Own the Results." },
       { name: "description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
-      { property: "og:title", content: "Webroco — Senior-Level Web Studio" },
+      { property: "og:title", content: "Webroco ï¿½ Senior-Level Web Studio" },
       { property: "og:description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
     ],
   }),
@@ -191,7 +191,7 @@ function Hero() {
 
   return (
     <section id="hero" className="relative h-[300vh]">
-      {/* Sticky container — pinned for 3x viewport scroll */}
+      {/* Sticky container ï¿½ pinned for 3x viewport scroll */}
       <div className="hero-sticky sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
 
         {/* --- CENTER IMAGE (like heynesh person photo) --- */}
@@ -206,7 +206,7 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* --- WEBROCO Logo + Socials (like NESH® top bar) --- */}
+        {/* --- WEBROCO Logo + Socials (like NESHï¿½ top bar) --- */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -255,7 +255,7 @@ function Hero() {
           ))}
         </motion.nav>
 
-        {/* --- Bottom Content (anchored to bottom, overlapping image — like heynesh) --- */}
+        {/* --- Bottom Content (anchored to bottom, overlapping image ï¿½ like heynesh) --- */}
         <div className="relative z-20 w-full px-5 md:px-10 pb-8 md:pb-12">
           <div className="max-w-[1400px] mx-auto flex items-end justify-between gap-6">
             
@@ -318,7 +318,7 @@ function Hero() {
           </div>
         </div>
 
-        {/* --- Fixed Stats Cards (position:fixed — stays while content scrolls) --- */}
+        {/* --- Fixed Stats Cards (position:fixed ï¿½ stays while content scrolls) --- */}
         <div className="fixed top-1/2 right-[8%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-3">
           {/* Stats */}
           <motion.div
@@ -628,7 +628,7 @@ function WorkCard({ w, index }: { w: typeof WORK[number]; index: number }) {
       <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight">
         {w.title}
       </h3>
-      <div className="mt-1 text-sm text-foreground/55">{w.year} – {w.cat}</div>
+      <div className="mt-1 text-sm text-foreground/55">{w.year} ï¿½ {w.cat}</div>
     </motion.a>
   );
 }
@@ -733,11 +733,11 @@ function CtaGuide() {
 /* ---------------------------- TESTIMONIALS ------------------------------ */
 
 const TESTIMONIALS = [
-  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch — the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
+  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch ï¿½ the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
   { quote: "A rare team that pairs taste with execution. Every shipped pixel felt considered and perfectly aligned with our brand.", name: "Amelia Chen", role: "Head of Design, Lumen" },
-  { quote: "Senior-level partners — not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
+  { quote: "Senior-level partners ï¿½ not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
   { quote: "The attention to detail and strategic thinking elevated our entire digital experience. Highly recommend.", name: "Sarah Kim", role: "CTO, Elevate" },
-  { quote: "They don't just build websites — they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
+  { quote: "They don't just build websites ï¿½ they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
 ];
 
 const CARD_ROTATIONS = [-6, 4, -3, 5, -4];
@@ -933,7 +933,7 @@ function BigMarquee() {
             key={i}
             className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-[14vw] leading-none text-foreground/15"
           >
-            Let&apos;s Work Together —
+            Let&apos;s Work Together ï¿½
           </span>
         ))}
       </motion.div>

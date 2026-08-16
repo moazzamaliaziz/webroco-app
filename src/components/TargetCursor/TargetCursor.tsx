@@ -56,7 +56,7 @@ const TargetCursor = ({
     return /android|webos|iphone|ipad|ipod|mobile/i.test(ua);
   }, []);
 
-  // Gap between cursor corners and element edge — 0 = flush, negative = tighter
+  // Gap between cursor corners and element edge ï¿½ 0 = flush, negative = tighter
   const PAD = 0;
 
   const moveCursor = useCallback((x: number, y: number) => {
@@ -129,7 +129,7 @@ const TargetCursor = ({
       strength.current = { v: 0 };
       gsap.to(strength.current, { v: 1, duration: hoverDuration, ease: "power2.out", overwrite: true });
 
-      // KILL spin completely — no rotation on target
+      // KILL spin completely ï¿½ no rotation on target
       if (spinTl.current) {
         spinTl.current.kill();
         spinTl.current = null;
