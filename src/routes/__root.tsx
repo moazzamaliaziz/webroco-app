@@ -7,7 +7,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { SmoothScroll } from "../components/smooth-scroll";
 import TargetCursor from "../components/TargetCursor/TargetCursor";
 
@@ -123,11 +124,69 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+
+const HERO_NAV = [
+  { label: "Home", to: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+  { label: "About", to: "/about", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
+  { label: "Services", to: "/service", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+  { label: "Portfolio", to: "/portfolio", icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" },
+  { label: "Blog", to: "/blog", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
+  { label: "Contact", to: "/contact", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+];
+
+function PersistentSidebar() {
+  const [pathname, setPathname] = useState("/");
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    const onPop = () => setPathname(window.location.pathname);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  return (
+    <motion.nav
+      initial={{ opacity: 0, x: -30 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-[9998] hidden lg:flex flex-col gap-0.5"
+    >
+      <div className="absolute inset-0 -inset-x-3 -inset-y-2 bg-foreground/[0.03] backdrop-blur-sm rounded-2xl border border-foreground/[0.06]" />
+      {HERO_NAV.map((item, i) => {
+        const isActive = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
+        return (
+          <motion.a
+            key={item.label}
+            href={item.to}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 + i * 0.07, duration: 0.5 }}
+            className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
+          >
+            <span className={"absolute inset-0 rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 " + (isActive ? "bg-foreground/[0.08] scale-100 opacity-100" : "bg-foreground/[0.06]")} />
+            <svg className={"w-3.5 h-3.5 transition-colors duration-300 relative z-10 shrink-0 " + (isActive ? "text-accent" : "text-foreground/35 group-hover:text-accent")} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+            </svg>
+            <span className="relative overflow-hidden h-[16px] w-[72px] z-10">
+              <span className={"block text-[10px] tracking-[0.15em] uppercase transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0 " + (isActive ? "text-accent" : "text-foreground/45")}>
+                {item.label}
+              </span>
+              <span className="block absolute top-full left-0 text-[10px] tracking-[0.15em] text-accent uppercase transition-all duration-300 group-hover:top-0">
+                {item.label}
+              </span>
+            </span>
+          </motion.a>
+        );
+      })}
+    </motion.nav>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <PersistentSidebar />
       <TargetCursor spinDuration={2} hideDefaultCursor={true} parallaxOn={true} hoverDuration={0.2} cursorColor="#e8452a" cursorColorOnTarget="#ffffff" />
       <SmoothScroll>
         <Outlet />
