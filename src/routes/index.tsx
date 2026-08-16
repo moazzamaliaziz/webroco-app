@@ -479,74 +479,123 @@ function RevealTextScrub({ text, className = "" }: { text: string; className?: s
 }
 
 function About() {
-  const textRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: textRef, offset: ["start 0.75", "end 0.5"] });
-  const textOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+  const milestones = [
+    {
+      year: "'17",
+      title: "Founded in Pakistan",
+      desc: "Webroco was born out of a passion for building exceptional digital experiences. Starting as a small team with big ambitions, we set out to help brands transform their online presence with clean code and bold design.",
+      tag: "@webroco",
+      img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      year: "'19",
+      title: "First Major Client",
+      desc: "Landing our first enterprise client was a turning point. We delivered a full-stack e-commerce platform that doubled their online revenue within six months, proving our senior-level execution could compete with any agency.",
+      tag: "@ecommerce",
+      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      year: "'21",
+      title: "Expanding Services",
+      desc: "We broadened our expertise into SEO strategy and UI/UX design, offering clients a complete digital solution. This expansion allowed us to take on more complex projects and deliver measurable growth across every channel.",
+      tag: "@seo",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      year: "'23",
+      title: "Global Reach",
+      desc: "Our reputation crossed borders. We began working with international clients from the US, UK, and UAE, bringing the same dedicated approach and senior-level craftsmanship to every project regardless of time zone.",
+      tag: "@global",
+      img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      year: "'25",
+      title: "Present Day",
+      desc: "With 11+ projects delivered and a growing roster of satisfied clients, Webroco continues to push boundaries. We are a senior-level team that treats every project like our own — building, optimizing, and launching with precision.",
+      tag: "@webroco",
+      img: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80",
+    },
+  ];
 
   return (
-    <section className="relative px-5 md:px-10 py-24 md:py-32 border-t border-white/5">
+    <section data-bg="light" className="relative px-5 md:px-10 py-28 md:py-40 border-t border-black/5">
       <div className="max-w-[1500px] mx-auto">
+        {/* Label */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-2.5 mb-10 md:mb-14"
+          className="flex items-center gap-2.5 mb-8 md:mb-10"
         >
-          <span className="w-6 h-px bg-accent shrink-0" />
-          <span className="text-[11px] tracking-[0.12em] uppercase text-foreground/35">Who We Are</span>
+          <span className="w-8 h-[2px] bg-[#6d5dfc] shrink-0" />
+          <span className="text-[11px] tracking-[0.14em] uppercase text-black/40">About Us</span>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-15%" }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-5xl aspect-[16/8] rounded-2xl overflow-hidden border border-white/5"
-        >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-            poster="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1600&q=80"
-          >
-            <source src="https://cdn.pixabay.com/video/2022/12/09/142073-779139677_large.mp4" type="video/mp4" />
-          </video>
-        </motion.div>
+        {/* Heading */}
+        <h2 className="font-['Instrument_Sans',sans-serif] font-normal text-[8vw] md:text-[4.5vw] leading-[1.04] tracking-[-0.02em] max-w-5xl mb-16 md:mb-24">
+          <RevealWords text="Our Journey (&) What We Do" />
+        </h2>
 
-        <motion.h2
-          ref={textRef}
-          style={{ opacity: textOpacity }}
-          className="mt-20 md:mt-28 max-w-5xl font-['Instrument_Sans',sans-serif] font-normal text-[8.5vw] md:text-[4.6vw] leading-[1.04] tracking-[-0.02em]"
+        {/* Intro */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="text-base md:text-lg leading-relaxed text-black/60 max-w-2xl mb-20 md:mb-28"
         >
-          <RevealWords text="Building digital experiences that matter, for brands that want to lead since" />
-          <span className="ml-3 md:ml-4 inline-block text-foreground/40 align-baseline">
-            <RevealWords text="2017" baseDelay={0.6} />
-          </span>
-        </motion.h2>
+          Founded in 2017 in Pakistan, Webroco is a full-stack web development agency that delivers senior-level execution across development, SEO, and UI/UX design. We help brands build digital experiences that perform.
+        </motion.p>
 
-        <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-10 items-start">
-          <div />
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <RevealTextScrub
-              text="We help brands transform their digital presence with full-stack development, strategic SEO, and UI/UX design that converts. Whether your project is big or small, we bring senior-level execution to every line of code and every pixel."
-              className="text-base md:text-lg leading-relaxed text-foreground/70 max-w-md"
-            />
-            <a
-              href="/about"
-              className="mt-8 inline-flex items-center gap-2 h-12 px-7 rounded-full bg-primary text-primary-background font-medium hover:scale-[1.03] transition-transform relative overflow-hidden group"
-            >
-              <span className="relative z-10">Learn More</span>
-              <span className="absolute inset-0 bg-foreground/20 translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
-            </a>
-          </motion.div>
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical SVG line */}
+          <div className="absolute left-[20px] md:left-[32px] top-0 bottom-0 w-px bg-black/10" />
+
+          <div className="space-y-16 md:space-y-24">
+            {milestones.map((m, i) => (
+              <motion.div
+                key={m.year}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-8%" }}
+                transition={{ duration: 0.8, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                className="relative pl-12 md:pl-20 grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-8 md:gap-14 items-start"
+              >
+                {/* Year dot */}
+                <div className="absolute left-0 md:left-[16px] top-1.5 w-[10px] h-[10px] rounded-full bg-[#6d5dfc] ring-4 ring-[#6d5dfc]/20" />
+
+                {/* Left: Year + Title */}
+                <div>
+                  <span className="font-['Instrument_Sans',sans-serif] text-[4rem] md:text-[5.5rem] leading-none font-bold tracking-[-0.04em] text-black/[0.06]">
+                    {m.year}
+                  </span>
+                  <h3 className="font-['Instrument_Sans',sans-serif] text-2xl md:text-3xl font-semibold tracking-tight mt-2 text-black/90">
+                    {m.title}
+                  </h3>
+                  <span className="inline-block mt-3 text-xs tracking-wider uppercase text-[#6d5dfc]/70 font-medium">
+                    {m.tag}
+                  </span>
+                </div>
+
+                {/* Right: Description + Image */}
+                <div className="space-y-5">
+                  <p className="text-base md:text-lg leading-relaxed text-black/60">
+                    {m.desc}
+                  </p>
+                  <div className="overflow-hidden rounded-xl aspect-[16/10] bg-black/5">
+                    <img
+                      src={m.img}
+                      alt={m.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
