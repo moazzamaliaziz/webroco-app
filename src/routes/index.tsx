@@ -10,9 +10,9 @@ import heroImg from "../assets/hero-webroco.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Webroco � We Build the Web. You Own the Results." },
+      { title: "Webroco — We Build the Web. You Own the Results." },
       { name: "description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
-      { property: "og:title", content: "Webroco � Senior-Level Web Studio" },
+      { property: "og:title", content: "Webroco — Senior-Level Web Studio" },
       { property: "og:description", content: "Full-stack web development, SEO and UI/UX design that drives growth, performance and real results." },
     ],
   }),
@@ -29,6 +29,7 @@ function Index() {
       <Preloader onComplete={handleComplete} />
       {loaded && (
         <>
+          <Header />
           <Hero />
           <ImageDistortion />
           <PartnerMarquee />
@@ -170,19 +171,29 @@ function RevealChars({ text, baseDelay = 0 }: { text: string; baseDelay?: number
   );
 }
 
-/* -------------------------------- HERO (exact heynesh.com match) -------------------------------- */
+/* -------------------------------- HERO -------------------------------- */
+
+/* --------------------------------- HERO (heynesh-inspired agency layout) -------------------------------- */
 
 const HERO_NAV = [
-  { label: "Home", to: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-  { label: "About", to: "/about", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
-  { label: "Services", to: "/service", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-  { label: "Portfolio", to: "/portfolio", icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" },
-  { label: "Blog", to: "/blog", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
-  { label: "Contact", to: "/contact", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  { label: "Services", to: "/service" },
+  { label: "Portfolio", to: "/portfolio" },
+  { label: "Blog", to: "/blog" },
+  { label: "Contact", to: "/contact" },
+];
+
+const HERO_SOCIALS = [
+  { label: "LinkedIn", href: "https://linkedin.com" },
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "X", href: "https://x.com" },
+  { label: "GitHub", href: "https://github.com" },
 ];
 
 function Hero() {
   const [emailCopied, setEmailCopied] = useState(false);
+
   const copyEmail = () => {
     navigator.clipboard.writeText("hello@webroco.xyz");
     setEmailCopied(true);
@@ -190,190 +201,186 @@ function Hero() {
   };
 
   return (
-    <section id="hero" className="relative h-[300vh]">
-      {/* Sticky container � pinned for 3x viewport scroll */}
-      <div className="hero-sticky sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
+    <section className="relative min-h-screen flex overflow-hidden" id="hero">
+      {/* Accent glow behind image */}
+      <div className="absolute top-1/2 right-[18%] -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-accent/8 blur-[120px] pointer-events-none hidden lg:block" />
 
-        {/* --- CENTER IMAGE (like heynesh person photo) --- */}
+      {/* Main content grid */}
+      <div className="flex-1 flex flex-col justify-between px-5 md:px-10 pt-20 md:pt-24 pb-10 md:pb-14">
+        {/* Top: Social links */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
-        >
-          <div className="w-[65%] h-[75%] mt-8 rounded-2xl overflow-hidden">
-            <img src={heroImg} alt="Webroco" className="w-full h-full object-cover" />
-          </div>
-        </motion.div>
-
-        {/* --- WEBROCO Logo + Socials (like NESH� top bar) --- */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-5 md:px-10 py-5 md:py-7"
+          className="flex items-center gap-5 mb-auto"
         >
-          <a href="/" className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.03em] text-xl md:text-2xl">
-            webroco<span className="text-accent">.</span>
-          </a>
-          <div className="flex items-center gap-4 md:gap-6">
-            {["LinkedIn", "Instagram", "GitHub"].map((s) => (
-              <a key={s} href="#" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase hover:text-accent transition-colors duration-300 relative group">
-                {s}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* --- Left Sidebar Nav (heynesh-style) --- */}
-        <motion.nav
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-0.5"
-        >
-          <div className="absolute inset-0 -inset-x-3 -inset-y-2 bg-foreground/[0.03] backdrop-blur-sm rounded-2xl border border-foreground/[0.06]" />
-          {HERO_NAV.map((item, i) => (
+          {HERO_SOCIALS.map((s, i) => (
             <motion.a
-              key={item.label}
-              href={item.to}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.5 + i * 0.07, duration: 0.5 }}
-              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.08, duration: 0.6 }}
+              className="text-xs uppercase tracking-[0.2em] text-foreground/50 hover:text-accent transition-colors duration-300 relative group"
             >
-              <span className="absolute inset-0 bg-foreground/[0.06] rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-              <svg className="w-3.5 h-3.5 text-foreground/35 group-hover:text-accent transition-colors duration-300 relative z-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-              </svg>
-              <span className="relative overflow-hidden h-[16px] w-[72px] z-10">
-                <span className="block text-[10px] tracking-[0.15em] text-foreground/45 uppercase transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">{item.label}</span>
-                <span className="block absolute top-full left-0 text-[10px] tracking-[0.15em] text-accent uppercase transition-all duration-300 group-hover:top-0">{item.label}</span>
-              </span>
+              {s.label}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
             </motion.a>
           ))}
-        </motion.nav>
-
-        {/* --- Bottom Content (anchored to bottom, overlapping image � like heynesh) --- */}
-        <div className="relative z-20 w-full px-5 md:px-10 pb-8 md:pb-12">
-          <div className="max-w-[1400px] mx-auto flex items-end justify-between gap-6">
-            
-            {/* Left: small text */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="hidden md:block max-w-[170px] shrink-0"
-            >
-              <p className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase leading-[1.9]">
-                Senior-Level<br />Web Studio.<br />
-                <span className="text-foreground/60">That&apos;s Webroco.</span>
-              </p>
-            </motion.div>
-
-            {/* Center: Headline + CTAs */}
-            <div className="flex-1 flex flex-col items-center text-center max-w-2xl mx-auto">
-              <motion.h1
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.88] text-[10vw] md:text-[5.5vw] lg:text-[4vw]"
-              >
-                We Build the Web,<br />
-                <span className="text-foreground/30">You Own the Results.</span>
-              </motion.h1>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.8 }}
-                className="mt-7 flex flex-wrap items-center justify-center gap-3"
-              >
-                <a href="mailto:hello@webroco.xyz" className="group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]">
-                  <span className="relative z-10">Let&apos;s Talk</span>
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-0.5 transition-transform"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
-                </a>
-                <a href="/about" className="inline-flex items-center h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/55 hover:text-foreground hover:border-foreground/40 transition-all duration-300">
-                  About Us
-                </a>
-              </motion.div>
-            </div>
-
-            {/* Right: description + email */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="hidden lg:block max-w-[230px] shrink-0 text-right"
-            >
-              <p className="text-[12px] leading-[1.7] text-foreground/45">
-                Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results.
-              </p>
-              <button onClick={copyEmail} className="mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer">
-                {emailCopied ? "Copied!" : "hello@webroco.xyz"}
-              </button>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* --- Fixed Stats Cards (position:fixed � stays while content scrolls) --- */}
-        <div className="fixed top-1/2 right-[8%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-3">
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.1, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-foreground/[0.05] backdrop-blur-md border border-foreground/[0.08] rounded-xl p-5 min-w-[160px]"
-          >
-            <div className="flex items-end gap-6">
-              <div>
-                <div className="text-3xl font-extrabold tracking-tight">11+</div>
-                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Projects</div>
-              </div>
-              <div>
-                <div className="text-xl font-extrabold tracking-tight">1+</div>
-                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Year</div>
-              </div>
-            </div>
-          </motion.div>
-          {/* Traits */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-foreground/[0.05] backdrop-blur-md border border-foreground/[0.08] rounded-xl p-4 min-w-[110px]"
-          >
-            <div className="flex flex-col gap-1.5">
-              {["Creative", "Reliable", "Strategist", "Builder", "Efficient"].map((t, i) => (
-                <motion.span key={t} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.4 + i * 0.06, duration: 0.4 }} className="text-[10px] tracking-[0.15em] text-foreground/40 uppercase">{t}</motion.span>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* --- Custom Scroll Indicator (animated) --- */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 1 }}
-          className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
-        >
-          <span className="text-[9px] tracking-[0.35em] text-foreground/25 uppercase">Scroll</span>
-          <motion.div
-            className="w-px h-10 relative overflow-hidden"
-          >
-            <motion.span
-              className="absolute top-0 left-0 w-full bg-foreground/30"
-              animate={{ height: ["0%", "100%", "0%"], y: ["0%", "0%", "100%"] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ display: "block", width: "100%" }}
-            />
-          </motion.div>
         </motion.div>
 
+        {/* Center: Headline + tagline */}
+        <div className="flex-1 flex flex-col justify-center max-w-[700px] lg:max-w-[600px] py-10 md:py-0">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-[11px] tracking-[0.3em] text-accent uppercase mb-6 md:mb-8 font-medium"
+          >
+            Senior-Level Web Studio
+          </motion.p>
+
+          <h1 className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.92] text-[12vw] md:text-[5.5vw] lg:text-[4.5vw]">
+            <span className="block"><RevealChars text="We Build" baseDelay={0.15} /></span>
+            <span className="block text-foreground/40"><RevealChars text="the Web." baseDelay={0.28} /></span>
+            <span className="block ml-[8%]"><RevealChars text="You Own" baseDelay={0.41} /></span>
+            <span className="block text-foreground/25"><RevealChars text="the Results." baseDelay={0.54} /></span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-6 md:mt-8 text-sm md:text-base leading-relaxed text-foreground/60 max-w-md"
+          >
+            Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results. No juniors, no outsourcing.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0, duration: 0.8 }}
+            className="mt-8 md:mt-10 flex flex-wrap items-center gap-4"
+          >
+            <a
+              href="mailto:hello@webroco.xyz"
+              className="group relative inline-flex items-center gap-3 h-12 px-8 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]"
+            >
+              <span className="relative z-10">Let&apos;s Talk</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-1 transition-transform">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
+            </a>
+            <a
+              href="/about"
+              className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-foreground/20 text-sm font-medium text-foreground/70 hover:text-foreground hover:border-foreground/50 transition-all duration-300"
+            >
+              About Us
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Bottom: Stats + Email */}
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          {/* Stats */}
+          <div className="flex items-center gap-8 md:gap-14">
+            {[
+              { num: "11+", label: "Projects" },
+              { num: "1+", label: "Year" },
+              { num: "3+", label: "Happy Clients" },
+            ].map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 + i * 0.1, duration: 0.7 }}
+              >
+                <div className="text-3xl md:text-4xl font-extrabold tracking-tight">{s.num}</div>
+                <div className="text-[11px] tracking-[0.15em] text-foreground/45 uppercase mt-1">{s.label}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Copy email */}
+          <motion.button
+            onClick={copyEmail}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            className="group text-right cursor-pointer hidden md:block"
+          >
+            <div className="text-sm text-foreground/70 group-hover:text-accent transition-colors">
+              {emailCopied ? "Copied!" : "hello@webroco.xyz"}
+            </div>
+            <div className="text-[10px] tracking-[0.15em] text-foreground/35 uppercase mt-0.5">
+              {emailCopied ? "? Done" : "Click to copy"}
+            </div>
+          </motion.button>
+        </div>
       </div>
+
+      {/* Right: Hero Image */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden lg:block w-[42%] relative"
+      >
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={heroImg}
+            alt="Webroco � Web Development Studio"
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-background/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/30" />
+        </div>
+
+        {/* Floating project card � unique touch */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, rotate: -3 }}
+          animate={{ opacity: 1, y: 0, rotate: -3 }}
+          transition={{ delay: 1.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute bottom-20 left-6 bg-background/90 backdrop-blur-md border border-foreground/10 rounded-xl p-4 w-[180px] shadow-[0_20px_60px_rgba(0,0,0,0.4)] z-10"
+        >
+          <div className="text-[10px] text-accent tracking-[1px] uppercase mb-1.5">Latest Project</div>
+          <div className="text-sm font-bold leading-tight">E-Commerce Platform</div>
+          <div className="text-[10px] text-foreground/40 mt-1.5">2025 � Development</div>
+        </motion.div>
+      </motion.div>
+
+      {/* Far right: Vertical sidebar nav (heynesh-style) */}
+      <motion.nav
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        className="hidden xl:flex flex-col items-end justify-center gap-5 pr-5 md:pr-10"
+      >
+        {HERO_NAV.map((item, i) => (
+          <motion.a
+            key={item.label}
+            href={item.to}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.7 + i * 0.07, duration: 0.5 }}
+            className="group relative text-right"
+          >
+            {/* Label visible by default */}
+            <span className="text-[11px] tracking-[0.2em] text-foreground/30 uppercase transition-colors duration-300 group-hover:text-foreground/0">
+              {item.label}
+            </span>
+            {/* Hover label with accent color � slides in */}
+            <span className="absolute inset-0 flex items-center justify-end text-[11px] tracking-[0.2em] text-accent uppercase translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+              {item.label}
+            </span>
+          </motion.a>
+        ))}
+      </motion.nav>
     </section>
   );
 }
@@ -628,7 +635,7 @@ function WorkCard({ w, index }: { w: typeof WORK[number]; index: number }) {
       <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight">
         {w.title}
       </h3>
-      <div className="mt-1 text-sm text-foreground/55">{w.year} � {w.cat}</div>
+      <div className="mt-1 text-sm text-foreground/55">{w.year} – {w.cat}</div>
     </motion.a>
   );
 }
@@ -733,11 +740,11 @@ function CtaGuide() {
 /* ---------------------------- TESTIMONIALS ------------------------------ */
 
 const TESTIMONIALS = [
-  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch � the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
+  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch — the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
   { quote: "A rare team that pairs taste with execution. Every shipped pixel felt considered and perfectly aligned with our brand.", name: "Amelia Chen", role: "Head of Design, Lumen" },
-  { quote: "Senior-level partners � not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
+  { quote: "Senior-level partners — not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
   { quote: "The attention to detail and strategic thinking elevated our entire digital experience. Highly recommend.", name: "Sarah Kim", role: "CTO, Elevate" },
-  { quote: "They don't just build websites � they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
+  { quote: "They don't just build websites — they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
 ];
 
 const CARD_ROTATIONS = [-6, 4, -3, 5, -4];
@@ -933,7 +940,7 @@ function BigMarquee() {
             key={i}
             className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-[14vw] leading-none text-foreground/15"
           >
-            Let&apos;s Work Together �
+            Let&apos;s Work Together —
           </span>
         ))}
       </motion.div>

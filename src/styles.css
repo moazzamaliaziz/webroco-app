@@ -125,31 +125,7 @@
   }
 }
 
-/* ─── Custom Cursor ────────────────────────────────────────────────────────── */
 
-#rd-cursor {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  background: var(--accent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
-  mix-blend-mode: difference;
-}
-
-#rd-cursor-follower {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  border: 1px solid oklch(0.6 0.22 27 / 0.35);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-}
 
 /* ─── Film Grain Overlay ───────────────────────────────────────────────────── */
 
