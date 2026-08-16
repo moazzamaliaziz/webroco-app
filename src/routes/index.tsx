@@ -701,25 +701,51 @@ function WorkCard({ w, index }: { w: typeof WORK[number]; index: number }) {
 }
 
 function ServicesIntro() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const titleScale = useTransform(scrollYProgress, [0, 0.5, 0.62, 0.9], [1, 1, 1.08, 40]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.64, 0.92], [1, 1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.42, 0.9], [0, 0, -6]);
-  const stageBg = useTransform(scrollYProgress, [0.72, 0.98], ["var(--background)", "var(--primary)"]);
-  const lineOne = useTransform(scrollYProgress, [0.05, 0.25], ["100%", "0%"]);
-  const lineTwo = useTransform(scrollYProgress, [0.18, 0.38], ["100%", "0%"]);
-  const lineThree = useTransform(scrollYProgress, [0.31, 0.52], ["100%", "0%"]);
-
-  const lines = [
-    { text: "What services", position: lineOne },
-    { text: "we provide you", position: lineTwo },
-    { text: "actually", position: lineThree },
+  const capabilities = [
+    {
+      num: "01",
+      title: "Web Development",
+      description: "Full-stack React, Next.js, and TanStack Start applications built for scale and speed.",
+      icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+    },
+    {
+      num: "02",
+      title: "UI/UX Design",
+      description: "User-centered design systems and interfaces that feel intuitive and look premium.",
+      icon: "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z",
+    },
+    {
+      num: "03",
+      title: "SEO & Growth",
+      description: "Technical SEO, Core Web Vitals optimization, and content strategy that drives organic traffic.",
+      icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
+    },
+    {
+      num: "04",
+      title: "Brand Identity",
+      description: "Logo systems, visual guidelines, and brand strategy that make you memorable.",
+      icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01",
+    },
+    {
+      num: "05",
+      title: "E-Commerce",
+      description: "Shopify builds, custom stores, and payment integrations that convert browsers into buyers.",
+      icon: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z",
+    },
+    {
+      num: "06",
+      title: "Performance",
+      description: "Speed optimization, monitoring, and analytics that keep your site lightning fast.",
+      icon: "M13 10V3L4 14h7v7l9-11h-7z",
+    },
   ];
 
   return (
-    <section ref={ref} className="relative h-[calc(100vh+1500px)] border-t border-white/5">
+    <section ref={sectionRef} className="relative px-5 md:px-10 py-24 md:py-32 border-t border-white/5">
+      {/* Background grid lines */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div className="max-w-[1600px] mx-auto h-full grid grid-cols-4 md:grid-cols-8">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -728,34 +754,83 @@ function ServicesIntro() {
         </div>
       </div>
 
-      <motion.div style={{ backgroundColor: stageBg }} className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+      <div className="max-w-[1500px] mx-auto relative">
+        {/* Label */}
         <motion.div
-          style={{ opacity: titleOpacity, scale: titleScale, y: titleY }}
-          className="absolute inset-0 z-10 flex items-center justify-center text-center px-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-3 mb-8"
         >
-          <span className="block max-w-[716px] font-['Sequel_Sans_Roman_Body','Instrument_Sans',sans-serif] font-[310] text-[33px] sm:text-[40px] lg:text-[60px] 2xl:text-[80px] leading-[0.9] tracking-[-0.07em]" style={{ WebkitFontSmoothing: "antialiased", textRendering: "optimizeLegibility" }}>
-            {lines.map((line) => (
-              <motion.span
-                key={line.text}
-                style={{
-                  backgroundPositionX: line.position,
-                  backgroundImage: "linear-gradient(to right, var(--foreground) 50%, var(--muted-foreground) 51%)",
-                  backgroundSize: "200% 100%",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                }}
-                className="block"
-              >
-                {line.text}
-              </motion.span>
-            ))}
+          <div className="w-8 h-[2px] bg-[var(--primary)]" />
+          <span className="text-xs font-medium tracking-[0.2em] uppercase text-[var(--muted-foreground)]">
+            What We Offer
           </span>
         </motion.div>
-      </motion.div>
+
+        {/* Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="font-['Plus_Jakarta_Sans',sans-serif] font-normal text-[7.5vw] md:text-[4vw] leading-[1.05] tracking-[-0.02em] max-w-5xl mb-8 md:mb-12"
+        >
+          <RevealWords text="Our Capabilities" />
+        </motion.h2>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-foreground/55 text-base md:text-lg leading-relaxed max-w-2xl mb-16 md:mb-24"
+        >
+          From pixel-perfect design to production-grade code, we deliver end-to-end digital
+          solutions that drive real business results. Every service is backed by senior-level
+          expertise and a relentless focus on quality.
+        </motion.p>
+
+        {/* Capabilities List */}
+        <div className="space-y-0">
+          {capabilities.map((cap, i) => (
+            <motion.div
+              key={cap.num}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.08 }}
+              className="group border-t border-white/10 last:border-b"
+            >
+              <div className="flex items-start gap-6 md:gap-10 py-8 md:py-12 px-4 md:px-8 -mx-4 md:-mx-8 rounded-2xl hover:bg-white/[0.02] transition-colors duration-500 cursor-default">
+                {/* Number */}
+                <span className="text-[var(--primary)] font-['Sequel_Sans_Roman_Body','Instrument_Sans',sans-serif] text-3xl md:text-5xl font-light tracking-[-0.03em] shrink-0 w-20 md:w-28">
+                  {cap.num}
+                </span>
+
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-['Plus_Jakarta_Sans',sans-serif] text-xl md:text-3xl font-medium tracking-[-0.02em] mb-3 group-hover:text-[var(--primary)] transition-colors duration-300">
+                    {cap.title}
+                  </h3>
+                  <p className="text-foreground/45 text-sm md:text-base leading-relaxed max-w-xl">
+                    {cap.description}
+                  </p>
+                </div>
+
+                {/* Arrow */}
+                <div className="shrink-0 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg className="w-5 h-5 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
+
 
 /* ----------------------------- CTA GUIDE -------------------------------- */
 
@@ -795,66 +870,114 @@ function CtaGuide() {
   );
 }
 
-/* ---------------------------- TESTIMONIALS ------------------------------ */
-
 const TESTIMONIALS = [
-  { quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch — the results speak for themselves.", name: "Jonathan Reed", role: "CEO, Northwind" },
-  { quote: "A rare team that pairs taste with execution. Every shipped pixel felt considered and perfectly aligned with our brand.", name: "Amelia Chen", role: "Head of Design, Lumen" },
-  { quote: "Senior-level partners — not vendors. They challenged our assumptions, then delivered beyond the brief.", name: "Marcus Hollis", role: "Founder, Northshore" },
-  { quote: "The attention to detail and strategic thinking elevated our entire digital experience. Highly recommend.", name: "Sarah Kim", role: "CTO, Elevate" },
-  { quote: "They don't just build websites — they craft experiences. Our conversion rate doubled within 3 months.", name: "David Park", role: "Founder, Nexus" },
+  {
+    quote: "Webroco transformed our online presence. Strategy, craft and care from kick-off to launch — the results speak for themselves.",
+    name: "Jonathan Reed",
+    role: "CEO",
+    company: "Northwind",
+    companyUrl: "#",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+  },
+  {
+    quote: "A rare team that pairs taste with execution. Every shipped pixel felt considered and perfectly aligned with our brand.",
+    name: "Amelia Chen",
+    role: "Head of Design",
+    company: "Lumen",
+    companyUrl: "#",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face",
+  },
+  {
+    quote: "Senior-level partners — not vendors. They challenged our assumptions, then delivered beyond the brief.",
+    name: "Marcus Hollis",
+    role: "Founder",
+    company: "Northshore",
+    companyUrl: "#",
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
+  },
+  {
+    quote: "The attention to detail and strategic thinking elevated our entire digital experience. Highly recommend.",
+    name: "Sarah Kim",
+    role: "CTO",
+    company: "Elevate",
+    companyUrl: "#",
+    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
+  },
 ];
-
-const CARD_ROTATIONS = [-6, 4, -3, 5, -4];
 
 function Testimonials() {
   return (
     <section data-bg="light" className="relative px-5 md:px-10 py-24 md:py-32 border-t border-white/5">
       <div className="max-w-[1500px] mx-auto">
-        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] font-normal text-[7.5vw] md:text-[4vw] leading-[1.05] tracking-[-0.02em] max-w-5xl mb-20 md:mb-28">
-          <RevealWords text="Our happy clients always say how satisfied they are with our service." />
+        {/* Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-4 mb-6"
+        >
+          <span className="text-sm tracking-[0.2em] uppercase text-foreground/50 font-medium">Testimonials</span>
+          <div className="w-12 h-px bg-foreground/20" />
+        </motion.div>
+
+        {/* Heading */}
+        <h2 className="font-['Plus_Jakarta_Sans',sans-serif] font-normal text-[7.5vw] md:text-[4vw] leading-[1.05] tracking-[-0.02em] max-w-5xl mb-16 md:mb-24">
+          <RevealWords text="What Our Clients Say" />
         </h2>
 
-        <div className="relative h-[480px] overflow-hidden mx-[-20px]">
-          {TESTIMONIALS.map((t, i) => {
-            const positions = [
-              "left-0 top-[30px]",
-              "left-[22%] top-0",
-              "left-[47%] top-[50px]",
-              "left-[73%] top-[10px]",
-              "left-[10%] top-[120px]",
-            ];
-            return (
-              <motion.figure
-                key={t.name}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.9, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className={`absolute w-[280px] p-7 rounded-2xl shadow-[0_30px_80px_rgba(0,0,0,0.15)] ${positions[i] || ""}`}
-                style={{
-                  transform: `rotate(${CARD_ROTATIONS[i]}deg)`,
-                  background: i % 2 === 0 ? "#111" : "#fff",
-                  color: i % 2 === 0 ? "#fff" : "#111",
-                }}
-              >
-                <blockquote className="text-[13px] leading-[1.7] opacity-85 mb-5">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <div className="text-[14px] font-bold mb-0.5">{t.name}</div>
-                <div className="text-[11px] opacity-50 tracking-[0.5px]">{t.role}</div>
-                <div
-                  className="absolute bottom-5 right-5 w-9 h-9 rounded-full flex items-center justify-center text-[16px]"
-                  style={{
-                    background: i % 2 === 0 ? "#e8452a" : "#111",
-                    color: i % 2 === 0 ? "#fff" : "#fff",
-                  }}
-                >
-                  &ldquo;
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.figure
+              key={t.name}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{
+                duration: 0.8,
+                delay: i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group relative rounded-2xl p-8 md:p-10 border border-foreground/10 bg-foreground/[0.02] hover:bg-foreground/[0.05] transition-colors duration-500"
+            >
+              {/* Quote mark */}
+              <div className="text-5xl md:text-6xl leading-none text-foreground/10 font-serif mb-4 select-none">&ldquo;</div>
+
+              {/* Quote text */}
+              <blockquote className="text-lg md:text-xl leading-relaxed text-foreground/80 mb-8 font-light">
+                {t.quote}
+              </blockquote>
+
+              {/* Client info */}
+              <div className="flex items-center gap-4">
+                <img
+                  src={t.photo}
+                  alt={t.name}
+                  className="w-12 h-12 rounded-full object-cover ring-2 ring-foreground/10"
+                  loading="lazy"
+                />
+                <div>
+                  <div className="text-sm font-semibold text-foreground">{t.name}</div>
+                  <div className="text-xs text-foreground/50">
+                    {t.role},{" "}
+                    <a
+                      href={t.companyUrl}
+                      className="underline decoration-foreground/30 underline-offset-2 hover:text-foreground hover:decoration-foreground/60 transition-colors"
+                    >
+                      {t.company}
+                    </a>
+                  </div>
                 </div>
-              </motion.figure>
-            );
-          })}
+              </div>
+
+              {/* Subtle corner accent */}
+              <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden rounded-tr-2xl pointer-events-none">
+                <div className="absolute top-0 right-0 w-px h-8 bg-gradient-to-b from-foreground/15 to-transparent" />
+                <div className="absolute top-0 right-0 w-8 h-px bg-gradient-to-l from-foreground/15 to-transparent" />
+              </div>
+            </motion.figure>
+          ))}
         </div>
       </div>
     </section>
@@ -897,42 +1020,26 @@ function Marquee() {
 
 /* -------------------------------- AWARDS -------------------------------- */
 
-const AWARDS = [
-  { house: "Expertise", rows: [["Top Web Development Company", "2025"], ["Best UI/UX Design Firm", "2024"], ["Top SEO Agency", "2024"], ["Best E-Commerce Developer", "2023"]] },
-  { house: "Clutch", rows: [["Top Rated Developer", "2025"], ["Best Web Design", "2024"], ["Leader in SEO Services", "2024"]] },
-  { house: "Google", rows: [["Partner Agency", "2025"], ["Performance Certified", "2024"]] },
-];
+const AWARDS = [];
 
 function Awards() {
   return (
     <section data-bg="dark" className="relative px-5 md:px-10 py-28 md:py-40 border-t border-white/5">
-      <div className="max-w-[1500px] mx-auto">
-        <h2 className="font-['Instrument_Sans',sans-serif] text-[8vw] md:text-[4.2vw] leading-[1.05] tracking-[-0.02em] max-w-5xl mb-20 md:mb-28">
+      <div className="max-w-[1500px] mx-auto text-center">
+        <div className="w-12 h-[2px] bg-accent/50 mx-auto mb-10" />
+        <h2 className="font-['Instrument_Sans',sans-serif] text-[7vw] md:text-[3.8vw] leading-[1.1] tracking-[-0.02em] max-w-3xl mx-auto mb-8">
           <RevealWords text="We believe in quality, not quantity, that's why we deliver exceptional results." />
         </h2>
-
-        <div className="space-y-12 md:space-y-16">
-          {AWARDS.map((a, i) => (
-            <motion.div
-              key={a.house}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.7, delay: i * 0.05 }}
-              className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-10 border-t border-white/10 pt-8"
-            >
-              <div className="text-foreground/55 text-base md:text-lg">{a.house}</div>
-              <div className="space-y-3">
-                {a.rows.map(([label, year]) => (
-                  <div key={label} className="flex justify-between text-lg md:text-xl text-foreground/80">
-                    <span>{label}</span>
-                    <span className="text-foreground/55">{year}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-foreground/50 text-lg md:text-xl max-w-xl mx-auto leading-relaxed"
+        >
+          Every project we deliver is an award-winning experience.
+        </motion.p>
+        <div className="w-12 h-[2px] bg-accent/50 mx-auto mt-10" />
       </div>
     </section>
   );
@@ -941,10 +1048,10 @@ function Awards() {
 /* -------------------------------- TEAM ---------------------------------- */
 
 const TEAM = [
-  { name: "Moazzam Ali", role: "Founder & Lead Developer", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" },
-  { name: "Sarah Chen", role: "Lead Designer", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80" },
-  { name: "Alex Rivera", role: "SEO Specialist", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" },
-  { name: "Jordan Park", role: "Project Manager", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80" },
+  { name: "Moazzam Ali", role: "Founder & Lead Developer", gradient: "from-accent/30 to-accent/5" },
+  { name: "Sarah Chen", role: "Lead Designer", gradient: "from-blue-500/30 to-blue-500/5" },
+  { name: "Alex Rivera", role: "SEO Specialist", gradient: "from-emerald-500/30 to-emerald-500/5" },
+  { name: "Jordan Park", role: "Project Manager", gradient: "from-purple-500/30 to-purple-500/5" },
 ];
 
 function Team() {
@@ -968,12 +1075,16 @@ function Team() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
               transition={{ duration: 0.9, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group"
+              className="group cursor-default"
             >
-              <div className="overflow-hidden rounded-[12px] aspect-[3/4] bg-white/5">
-                <img src={m.img} alt={m.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]" />
+              <div className={"overflow-hidden rounded-[12px] aspect-[3/4] bg-gradient-to-b " + m.gradient + " transition-all duration-500 ease-out group-hover:shadow-[0_8px_40px_-12px_rgba(255,255,255,0.08)] group-hover:scale-[1.02]"}>
+                <div className="w-full h-full flex items-center justify-center">
+                  <span className="text-foreground/20 text-5xl md:text-6xl font-['Instrument_Sans',sans-serif] font-bold select-none">
+                    {m.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
               </div>
-              <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight">{m.name}</h3>
+              <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight group-hover:text-accent transition-colors duration-300">{m.name}</h3>
               <p className="text-sm text-foreground/55 mt-1">{m.role}</p>
             </motion.div>
           ))}
