@@ -627,21 +627,23 @@ function Work() {
       </div>
 
       <div className="relative max-w-[1500px] mx-auto">
-        <div className="grid grid-cols-3 items-center mb-20 md:mb-28">
-          <span className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-foreground/85 font-medium">Selected</span>
-          <h2 className="text-center font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-[10vw] md:text-[5.5vw] leading-none">
+        {/* Header row */}
+        <div className="flex items-end justify-between mb-16 md:mb-24">
+          <span className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-foreground/60 font-medium">Selected</span>
+          <h2 className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] text-[12vw] md:text-[6vw] leading-none">
             <RevealWords text="Work" />
           </h2>
-          <a href="/portfolio" className="justify-self-end text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-foreground/85 font-medium hover:text-foreground transition-colors">
-            Browse More <span className="text-foreground/55">(08)</span>
+          <a href="/portfolio" className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-foreground/60 font-medium hover:text-foreground transition-colors duration-300">
+            Browse More <span className="text-foreground/40">(08)</span>
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:gap-x-14 gap-y-10">
+        {/* Staggered 3-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 lg:gap-x-10 gap-y-12">
           {[0, 1, 2].map((col) => (
             <div
               key={col}
-              className={`flex flex-col gap-20 md:gap-28 ${
+              className={`flex flex-col gap-16 md:gap-24 ${
                 col === 0 ? "md:pt-40" : col === 1 ? "md:pt-0" : "md:pt-24"
               }`}
             >
@@ -660,36 +662,48 @@ function WorkCard({ w, index }: { w: typeof WORK[number]; index: number }) {
   return (
     <motion.a
       href="#"
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-12%" }}
-      transition={{ duration: 0.9, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group block"
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{
+        duration: 0.9,
+        delay: (index % 3) * 0.12,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="group block cursor-pointer"
     >
-      <div className={`relative overflow-hidden rounded-[14px] ${w.ratio} bg-white/5`}>
+      <div className={`relative overflow-hidden rounded-2xl ${w.ratio} bg-white/5`}>
+        {/* Image */}
         <img
           src={w.img}
           alt={w.title}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+          className="w-full h-full object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {/* Hover pill */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
-          <span className="px-6 py-3 rounded-full bg-foreground text-background text-sm font-semibold shadow-xl">
-            View Project
+
+        {/* Gradient overlay — always present but subtle, intensifies on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-40 group-hover:opacity-80 transition-opacity duration-500" />
+
+        {/* Bottom content — title + category, slides up on hover */}
+        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out">
+          <span className="inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white text-[11px] font-medium uppercase tracking-wider mb-2.5">
+            {w.cat}
           </span>
+          <h3 className="text-white text-lg md:text-xl font-semibold tracking-tight leading-tight">
+            {w.title}
+          </h3>
+          <p className="text-white/60 text-sm mt-1">{w.year}</p>
         </div>
       </div>
-      <h3 className="mt-5 text-xl md:text-2xl font-semibold tracking-tight">
+
+      {/* Below-card info — always visible */}
+      <h3 className="mt-4 text-lg md:text-xl font-semibold tracking-tight group-hover:text-foreground/90 transition-colors duration-300">
         {w.title}
       </h3>
-      <div className="mt-1 text-sm text-foreground/55">{w.year} – {w.cat}</div>
+      <div className="mt-1 text-sm text-foreground/50">{w.cat}</div>
     </motion.a>
   );
 }
-
-/* ---------------------------- SERVICES SECTION --------------------------- */
 
 function ServicesIntro() {
   const ref = useRef<HTMLDivElement>(null);
