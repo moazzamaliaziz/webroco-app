@@ -145,32 +145,7 @@ body::before {
 ::-webkit-scrollbar-track { background: var(--background); }
 ::-webkit-scrollbar-thumb { background: oklch(0.25 0.005 260); border-radius: 2px; }
 
-/* ─── Distortion Columns ──────────────────────────────────────────────────── */
 
-.distort-lines {
-  position: absolute;
-  inset: 0;
-  display: flex;
-}
-
-.distort-col {
-  flex: 1;
-  background: linear-gradient(180deg, #c8784a 0%, #8b4a1a 100%);
-  opacity: 0.6;
-}
-
-.distort-col:nth-child(odd) {
-  animation: waveCol 2s ease-in-out infinite alternate;
-}
-
-.distort-col:nth-child(even) {
-  animation: waveCol 2.4s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes waveCol {
-  0% { transform: scaleY(0.3) translateY(60%); }
-  100% { transform: scaleY(1) translateY(0); }
-}
 
 @utility display {
   font-family: var(--font-display);
@@ -192,23 +167,7 @@ body::before {
 }
 @utility animate-float { animation: float-y 6s ease-in-out infinite; }
 
-/* ��� Hero Section ��� */
+/* ─── Hero Section ─────────────────────────────────────────────────────── */
 #hero {
   background: var(--background);
-}
-
-#hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-}
-
-@media (max-width: 1023px) {
-  #hero .hero-mobile-image {
-    display: block;
-  }
 }

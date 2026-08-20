@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, useMotionValueEvent } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Preloader } from "../components/preloader";
@@ -191,16 +191,21 @@ function CounterNum({ to, suffix = "" }: { to: number; suffix?: string }) {
 
 /* =================================== HERO =================================== */
 
-const HERO_NAV = [
-  { label: "Home", to: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-  { label: "About", to: "/about", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
-  { label: "Services", to: "/service", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-  { label: "Portfolio", to: "/portfolio", icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" },
-  { label: "Blog", to: "/blog", icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" },
-  { label: "Contact", to: "/contact", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-];
-
 function Hero() {
+  const [emailCopied, setEmailCopied] = useState(false);
+  const copyEmail = () => {
+    navigator.clipboard.writeText("hello@webroco.xyz");
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };function Hero() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const [scrollIndicatorOpacity, setScrollIndicatorOpacity] = useState(1);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setScrollIndicatorOpacity(Math.max(0, 1 - v * 4));
+  });
+
   const [emailCopied, setEmailCopied] = useState(false);
   const copyEmail = () => {
     navigator.clipboard.writeText("hello@webroco.xyz");
@@ -209,11 +214,16 @@ function Hero() {
   };
 
   return (
-    <section id="hero" className="relative h-[300vh]">
-      {/* Sticky container — pinned for 3x viewport scroll */}
-      <div className="hero-sticky sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
+    <section ref={sectionRef} id="hero" className="relative h-[200vh]">
+      {/* Sticky container — pinned for 2x viewport scroll */}
+      <div className="sticky top-0 h-screen flex flex-col justify-end overflow-hidden">
 
-        {/* ─── CENTER IMAGE (like heynesh person photo) ─── */}
+        {/* Skip to content (accessibility) */}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-accent focus:text-white">
+          Skip to content
+        </a>
+
+        {/* ─── CENTER IMAGE ─── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -225,7 +235,7 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* ─── WEBROCO Logo + Socials (like NESH® top bar) ─── */}
+        {/* ─── WEBROCO Logo + Socials ─── */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -236,45 +246,20 @@ function Hero() {
             webroco<span className="text-accent">.</span>
           </a>
           <div className="flex items-center gap-4 md:gap-6">
-            {["LinkedIn", "Instagram", "GitHub"].map((s) => (
-              <a key={s} href="#" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase hover:text-accent transition-colors duration-300 relative group">
-                {s}
+            {[
+              { name: "LinkedIn", href: "https://linkedin.com" },
+              { name: "Instagram", href: "https://instagram.com" },
+              { name: "GitHub", href: "https://github.com" },
+            ].map((s) => (
+              <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.2em] text-foreground/35 uppercase hover:text-accent transition-colors duration-300 relative group">
+                {s.name}
                 <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-accent transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
         </motion.div>
 
-        {/* ─── Left Sidebar Nav (heynesh-style) ─── */}
-        <motion.nav
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-0.5"
-        >
-          <div className="absolute inset-0 -inset-x-3 -inset-y-2 bg-foreground/[0.03] backdrop-blur-sm rounded-2xl border border-foreground/[0.06]" />
-          {HERO_NAV.map((item, i) => (
-            <motion.a
-              key={item.label}
-              href={item.to}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.5 + i * 0.07, duration: 0.5 }}
-              className="group relative flex items-center gap-3 px-4 py-2.5 rounded-xl overflow-hidden z-10"
-            >
-              <span className="absolute inset-0 bg-foreground/[0.06] rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-              <svg className="w-3.5 h-3.5 text-foreground/35 group-hover:text-accent transition-colors duration-300 relative z-10 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-              </svg>
-              <span className="relative overflow-hidden h-[16px] w-[72px] z-10">
-                <span className="block text-[10px] tracking-[0.15em] text-foreground/45 uppercase transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">{item.label}</span>
-                <span className="block absolute top-full left-0 text-[10px] tracking-[0.15em] text-accent uppercase transition-all duration-300 group-hover:top-0">{item.label}</span>
-              </span>
-            </motion.a>
-          ))}
-        </motion.nav>
-
-        {/* ─── Bottom Content (anchored to bottom, overlapping image — like heynesh) ─── */}
+        {/* ─── Bottom Content ─── */}
         <div className="relative z-20 w-full px-5 md:px-10 pb-8 md:pb-12">
           <div className="max-w-[1400px] mx-auto flex items-end justify-between gap-6">
             
@@ -297,7 +282,7 @@ function Hero() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.88] text-[10vw] md:text-[5.5vw] lg:text-[4vw]"
+                className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold uppercase tracking-[-0.04em] leading-[0.88] text-[clamp(2.5rem,10vw,5rem)] md:text-[5.5vw] lg:text-[4vw]"
               >
                 We Build the Web,<br />
                 <span className="text-foreground/30">You Own the Results.</span>
@@ -309,12 +294,12 @@ function Hero() {
                 transition={{ delay: 0.9, duration: 0.8 }}
                 className="mt-7 flex flex-wrap items-center justify-center gap-3"
               >
-                <a href="mailto:hello@webroco.xyz" className="group relative inline-flex items-center gap-2 h-11 px-7 rounded-full bg-foreground text-background text-sm font-medium overflow-hidden transition-transform hover:scale-[1.03]">
+                <a href="mailto:hello@webroco.xyz" className="group relative inline-flex items-center gap-2 h-12 px-8 rounded-full bg-accent text-accent-foreground text-sm font-semibold overflow-hidden transition-transform hover:scale-[1.03]">
                   <span className="relative z-10">Let&apos;s Talk</span>
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="relative z-10 group-hover:translate-x-0.5 transition-transform"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  <span className="absolute inset-0 bg-accent translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
+                  <span className="absolute inset-0 bg-foreground translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
                 </a>
-                <a href="/about" className="inline-flex items-center h-11 px-6 rounded-full border border-foreground/15 text-sm font-medium text-foreground/55 hover:text-foreground hover:border-foreground/40 transition-all duration-300">
+                <a href="/about" className="inline-flex items-center h-12 px-7 rounded-full border border-foreground/25 text-sm font-medium text-foreground/70 hover:text-foreground hover:border-foreground/50 transition-all duration-300">
                   About Us
                 </a>
               </motion.div>
@@ -330,16 +315,19 @@ function Hero() {
               <p className="text-[12px] leading-[1.7] text-foreground/45">
                 Full-stack web development, SEO & UI/UX design that drive growth, performance, and real results.
               </p>
-              <button onClick={copyEmail} className="mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer">
+              <button
+                onClick={copyEmail}
+                aria-label={emailCopied ? "Email copied to clipboard" : "Copy email address to clipboard"}
+                className="mt-3 text-[10px] tracking-[0.15em] text-foreground/35 uppercase hover:text-accent transition-colors cursor-pointer"
+              >
                 {emailCopied ? "Copied!" : "hello@webroco.xyz"}
               </button>
             </motion.div>
           </div>
         </div>
 
-        {/* ─── Fixed Stats Cards (position:fixed — stays while content scrolls) ─── */}
-        <div className="fixed top-1/2 right-[8%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-3">
-          {/* Stats */}
+        {/* ─── Stats Cards (absolute — scroll away with hero, not fixed) ─── */}
+        <div className="absolute top-1/2 right-[5%] xl:right-[8%] -translate-y-1/2 z-20 pointer-events-none hidden lg:flex flex-col gap-3">
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -352,12 +340,11 @@ function Hero() {
                 <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Projects</div>
               </div>
               <div>
-                <div className="text-xl font-extrabold tracking-tight">1+</div>
-                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Year</div>
+                <div className="text-xl font-extrabold tracking-tight">8+</div>
+                <div className="text-[9px] tracking-[0.2em] text-foreground/35 uppercase mt-0.5">Years</div>
               </div>
             </div>
           </motion.div>
-          {/* Traits */}
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -372,24 +359,23 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* ─── Custom Scroll Indicator (animated) ─── */}
+        {/* ─── Scroll Indicator (fades on scroll) ─── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.2, duration: 1 }}
+          style={{ opacity: scrollIndicatorOpacity }}
           className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2"
         >
           <span className="text-[9px] tracking-[0.35em] text-foreground/25 uppercase">Scroll</span>
-          <motion.div
-            className="w-px h-10 relative overflow-hidden"
-          >
+          <div className="w-px h-10 relative overflow-hidden">
             <motion.span
               className="absolute top-0 left-0 w-full bg-foreground/30"
               animate={{ height: ["0%", "100%", "0%"], y: ["0%", "0%", "100%"] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               style={{ display: "block", width: "100%" }}
             />
-          </motion.div>
+          </div>
         </motion.div>
 
       </div>
